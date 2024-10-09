@@ -33,8 +33,7 @@ def create_time_features(df, freq='D'):
         exog['day_of_week'] = df.index.dayofweek  # 0 = Monday, 6 = Sunday
         exog['day_of_month'] = df.index.day
         exog['day_of_year'] = df.index.dayofyear
-        exog['week_of_year'] = df.index.isocalendar().week
-
+        # exog['week_of_year'] = df.index.isocalendar().week
     elif freq == 'W':
         # Week-level features
         exog['week_of_year'] = df.index.isocalendar().week

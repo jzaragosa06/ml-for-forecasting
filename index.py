@@ -1,17 +1,4 @@
 
-# import pandas as pd
-# import numpy as np
-# from models.random_forest import *
-# from utility.date_functions import *
-
-# df = pd.read_csv('./datasets/candy_production.csv', index_col=0, parse_dates=True)
-
-# freq = infer_frequency(df)
-# exog = create_time_features(df=df, freq=freq)
-# results = forecast_and_evaluate_random_forest(df_arg = df, exog=exog, lag_value=15)
-
-
-# print(results['mae'])
 
 import os
 import pandas as pd
@@ -36,9 +23,13 @@ for filename in os.listdir(directory):
     file_path = os.path.join(directory, filename)
     df = pd.read_csv(file_path, index_col=0, parse_dates=True)
 
-    freq = infer_frequency(df)
+    # freq = infer_frequency(df)
+    freq = 'D'
     exog = create_time_features(df=df, freq=freq)
+    
     lags = 7
+    
+    print(exog)
     
     results_ridge = forecast_and_evaluate_ridge(df_arg=df, exog=exog, lag_value=lags)
     results_rf = forecast_and_evaluate_random_forest(df_arg=df, exog=exog, lag_value=lags)
@@ -63,10 +54,10 @@ for filename in os.listdir(directory):
     new_row_rmse = pd.DataFrame([[filename,results_ridge['rmse'],results_rf['rmse'],results_lr['rmse'],results_gb['rmse'],results_xgb['rmse'],results_dt['rmse'],results_lasso['rmse'],results_enr['rmse'],results_svr['rmse'], results_knn['rmse']]], columns=['fname','ridge','rf','lr','gb','xgb','dt','lasso','enr','svr','knn'])
     
     
-    new_row_mae.to_csv(csv_mae,  mode='a', header=False, index=False)
-    new_row_mape.to_csv(csv_mape, mode='a', header=False, index=False)
-    new_row_mse.to_csv(csv_mse, mode='a', header=False, index=False)
-    new_row_rmse.to_csv(csv_rmse, mode='a', header=False, index=False)
+    new_row_mae.to_csv(csv_mae,  mode='a', header=False, index=False, lineterminator="\n")
+    new_row_mape.to_csv(csv_mape, mode='a', header=False, index=False, lineterminator="\n")
+    new_row_mse.to_csv(csv_mse, mode='a', header=False, index=False, lineterminator="\n")
+    new_row_rmse.to_csv(csv_rmse, mode='a', header=False, index=False, lineterminator="\n")
     
     
     

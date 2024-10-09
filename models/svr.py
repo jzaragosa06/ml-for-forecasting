@@ -19,10 +19,14 @@ def forecast_and_evaluate_svr(df_arg, exog, lag_value):
     Returns:
     dict: Dictionary containing the best hyperparameters and evaluation metrics (MAE, MAPE, MSE, RMSE).
     """
+    
+    
+    print("Evaluating SVR.........................................")
+    
+    
     df = df_arg.copy(deep=True)
     df = df.reset_index()
     df = df.drop(df.columns[0], axis=1)
-
 
     forecaster = ForecasterAutoreg(
         regressor=SVR(),
@@ -53,7 +57,7 @@ def forecast_and_evaluate_svr(df_arg, exog, lag_value):
         return_best=True,  # Return the best parameter set
         random_state=123
     )
-    
+    print("done random search-------------------------------------------")
     best_params = results_random_search.iloc[0]['params']
 
     # Recreate the forecaster with the best parameters
